@@ -176,6 +176,23 @@ client.connect((err) => {
       res.send(admins.length > 0);
     });
   });
+
+  // Update data in mongo db
+ app.patch('/update/:id',(req,res)=>{
+
+  console.log(req.body);
+
+  orderCollection.updateOne({_id:ObjectID(req.body.id)},
+      {
+          $set: {"data.status":req.body.status}
+      }
+  )
+  .then(result=>{
+      res.send(result);
+  })
+
+})
+
   // Add admin
 
   app.post("/addAdmin", (req, res) => {
