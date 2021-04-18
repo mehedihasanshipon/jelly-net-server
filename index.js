@@ -51,37 +51,6 @@ client.connect((err) => {
     .then((result) => {
       res.send(result.insertedCount > 0);
     });
-
-    // console.log(file);
-
-
-
-
-
-
-    // file.mv(filePath, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     res.status(500).send({ msg: "Failed to upload image" });
-    //   }
-    //   const newImage = fs.readFileSync(filePath);
-    //   const convertImg = newImage.toString("base64");
-
-    //   const image = {
-    //     contentType: req.files.image.mimetype,
-    //     size: req.files.image.size,
-    //     img: Buffer.from(convertImg, "base64"),
-    //   };
-    //   serviceCollection
-    //     .insertOne({ name, price, desc, image })
-    //     .then((result) => {
-    //       fs.remove(filePath, (error) => {
-    //         if (error) console.log(error);
-    //         res.send(result.insertedCount > 0);
-    //       });
-    //     });
-    // });
-
   });
 
   // Add review
@@ -105,35 +74,6 @@ client.connect((err) => {
     .then((result) => {
       res.send(result.insertedCount > 0);
     });
-    
-
-
-    // console.log(file);
-    // file.mv(filePath, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     res.status(500).send({ msg: "Failed to upload image" });
-    //   }
-    //   const newImage = fs.readFileSync(filePath);
-    //   const convertImg = newImage.toString("base64");
-
-    //   const image = {
-    //     contentType: req.files.image.mimetype,
-    //     size: req.files.image.size,
-    //     img: Buffer.from(convertImg, "base64"),
-    //   };
-
-    //   reviewCollection
-    //     .insertOne({ name, designation, desc, image })
-    //     .then((result) => {
-    //       fs.remove(filePath, (error) => {
-    //         if (error) console.log(error);
-    //         res.send(result.insertedCount > 0);
-    //         console.log("Review added");
-    //       });
-    //     });
-        
-    // });
   });
 
 
@@ -169,6 +109,7 @@ client.connect((err) => {
       });
   });
 
+  // Confirm book order
   app.post("/bookOrder", (req, res) => {
     const data = req.body;
     console.log(data);
@@ -204,10 +145,6 @@ client.connect((err) => {
             res.send(docs);
           });
       }
-      // orderCollection.find()
-      // .toArray((error,docs)=>{
-      //     res.send(docs)
-      // })
     });
   });
 
@@ -221,9 +158,7 @@ client.connect((err) => {
 
   // Update data in mongo db
  app.patch('/update/:id',(req,res)=>{
-
   console.log(req.body);
-
   orderCollection.updateOne({_id:ObjectID(req.body.id)},
       {
           $set: {"data.status":req.body.status}
@@ -236,7 +171,6 @@ client.connect((err) => {
 })
 
   // Add admin
-
   app.post("/addAdmin", (req, res) => {
     const admin = req.body.name;
     console.log(admin);
@@ -245,11 +179,7 @@ client.connect((err) => {
       console.log("admin added");
     });
   });
-
-  //   console.log("error db", err);
   console.log("Database connected successfully");
-  // perform actions on the collection object
-  //   client.close();
 });
 
 app.listen(port, () => {
