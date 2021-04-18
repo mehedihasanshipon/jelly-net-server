@@ -47,7 +47,7 @@ client.connect((err) => {
     };
 
     serviceCollection
-    .insertOne({ name, designation, desc, image })
+    .insertOne({ name, price, desc, image })
     .then((result) => {
       fs.remove(filePath, (error) => {
         if (error) console.log(error);
