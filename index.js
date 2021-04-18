@@ -36,30 +36,56 @@ client.connect((err) => {
     const name = req.body.name;
     const price = req.body.price;
     const desc = req.body.desc;
-    const filePath = `${__dirname}/services/${file.name}`;
-    // console.log(file);
-    file.mv(filePath, (err) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send({ msg: "Failed to upload image" });
-      }
-      const newImage = fs.readFileSync(filePath);
-      const convertImg = newImage.toString("base64");
+    const filePath = `${__dirname}/reviews/${file.name}`;
+    const newImage = file.data;
+    const convertImg = newImage.toString("base64");
 
-      const image = {
-        contentType: req.files.image.mimetype,
-        size: req.files.image.size,
-        img: Buffer.from(convertImg, "base64"),
-      };
-      serviceCollection
-        .insertOne({ name, price, desc, image })
-        .then((result) => {
-          fs.remove(filePath, (error) => {
-            if (error) console.log(error);
-            res.send(result.insertedCount > 0);
-          });
-        });
+    const image = {
+      contentType: file.mimetype,
+      size: file.size,
+      img: Buffer.from(convertImg, "base64"),
+    };
+
+    serviceCollection
+    .insertOne({ name, designation, desc, image })
+    .then((result) => {
+      fs.remove(filePath, (error) => {
+        if (error) console.log(error);
+        res.send(result.insertedCount > 0);
+        console.log("Review added");
+      });
     });
+
+    // console.log(file);
+
+
+
+
+
+
+    // file.mv(filePath, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res.status(500).send({ msg: "Failed to upload image" });
+    //   }
+    //   const newImage = fs.readFileSync(filePath);
+    //   const convertImg = newImage.toString("base64");
+
+    //   const image = {
+    //     contentType: req.files.image.mimetype,
+    //     size: req.files.image.size,
+    //     img: Buffer.from(convertImg, "base64"),
+    //   };
+    //   serviceCollection
+    //     .insertOne({ name, price, desc, image })
+    //     .then((result) => {
+    //       fs.remove(filePath, (error) => {
+    //         if (error) console.log(error);
+    //         res.send(result.insertedCount > 0);
+    //       });
+    //     });
+    // });
+
   });
 
   // Add review
