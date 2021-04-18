@@ -50,13 +50,6 @@ client.connect((err) => {
     .insertOne({ name, price, desc, image })
     .then((result) => {
       res.send(result.insertedCount > 0);
-
-      // fs.remove(filePath, (error) => {
-      //   if (error) console.log(error);
-      //   res.send(result.insertedCount > 0);
-      //   console.log("Review added");
-      // });
-
     });
 
     // console.log(file);
@@ -110,11 +103,7 @@ client.connect((err) => {
     reviewCollection
     .insertOne({ name, designation, desc, image })
     .then((result) => {
-      fs.remove(filePath, (error) => {
-        if (error) console.log(error);
-        res.send(result.insertedCount > 0);
-        console.log("Review added");
-      });
+      res.send(result.insertedCount > 0);
     });
     
 
